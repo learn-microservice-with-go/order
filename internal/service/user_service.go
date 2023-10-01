@@ -7,7 +7,7 @@ import (
 
 	"github.com/google/uuid"
 	proto "github.com/learn-frame/learn-micro-service/api/service"
-	cache "github.com/learn-frame/learn-micro-service/internal/cache"
+	redis "github.com/learn-frame/learn-micro-service/internal/redis"
 	utils "github.com/learn-frame/learn-micro-service/internal/utils"
 	"google.golang.org/protobuf/types/known/emptypb"
 )
@@ -54,7 +54,7 @@ func (*Server) UpdateUser(context.Context, *proto.UpdateUserRequest) (*proto.Upd
 func (s *Server) GetUser(ctx context.Context, in *proto.GetUserRequest) (*proto.GetUserReply, error) {
 	log.Printf("Receive message body from client]: %s", strconv.FormatInt(in.Id, 10))
 
-	cache.Insert(uuid.NewString(), utils.GenerateVerificationCode(6))
+	redis.Insert(uuid.NewString(), utils.GenerateVerificationCode(6))
 
 	return &proto.GetUserReply{
 		User: &proto.User{
