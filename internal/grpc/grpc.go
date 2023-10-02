@@ -4,8 +4,8 @@ import (
 	"log"
 	"net"
 
-	proto "github.com/learn-microservice-with-go/user_microservice/api/service"
-	service "github.com/learn-microservice-with-go/user_microservice/internal/service"
+	proto "github.com/learn-microservice-with-go/order/api/service"
+	service "github.com/learn-microservice-with-go/order/internal/service"
 	"go.mongodb.org/mongo-driver/mongo"
 
 	"github.com/google/wire"

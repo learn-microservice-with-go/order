@@ -7,11 +7,11 @@
 package main
 
 import (
-	"github.com/learn-microservice-with-go/user_microservice/internal/config"
-	"github.com/learn-microservice-with-go/user_microservice/internal/grpc"
-	"github.com/learn-microservice-with-go/user_microservice/internal/mongo"
-	"github.com/learn-microservice-with-go/user_microservice/internal/mysql"
-	"github.com/learn-microservice-with-go/user_microservice/internal/redis"
+	"github.com/learn-microservice-with-go/order/internal/config"
+	"github.com/learn-microservice-with-go/order/internal/grpc"
+	"github.com/learn-microservice-with-go/order/internal/mongo"
+	"github.com/learn-microservice-with-go/order/internal/mysql"
+	"github.com/learn-microservice-with-go/order/internal/redis"
 )
 
 // Injectors from wire.go:

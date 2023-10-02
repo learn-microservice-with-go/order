@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	config "github.com/learn-microservice-with-go/user_microservice/internal/config"
+	config "github.com/learn-microservice-with-go/order/internal/config"
 
 	"github.com/google/wire"
 	"go.mongodb.org/mongo-driver/mongo"

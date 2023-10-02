@@ -9,9 +9,9 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	proto "github.com/learn-microservice-with-go/user_microservice/api/service"
-	model "github.com/learn-microservice-with-go/user_microservice/internal/model"
-	"github.com/learn-microservice-with-go/user_microservice/internal/utils"
+	proto "github.com/learn-microservice-with-go/order/api/service"
+	model "github.com/learn-microservice-with-go/order/internal/model"
+	"github.com/learn-microservice-with-go/order/internal/utils"
 	"github.com/redis/go-redis/v9"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"

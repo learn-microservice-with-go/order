@@ -1,4 +1,4 @@
-module github.com/learn-microservice-with-go/user_microservice
+module github.com/learn-microservice-with-go/order
 
 go 1.21.1
 

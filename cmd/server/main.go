@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	config "github.com/learn-microservice-with-go/user_microservice/internal/config"
+	config "github.com/learn-microservice-with-go/order/internal/config"
 	"github.com/redis/go-redis/v9"
 	"go.mongodb.org/mongo-driver/mongo"
 	"google.golang.org/grpc"
