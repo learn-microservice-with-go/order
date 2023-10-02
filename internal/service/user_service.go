@@ -13,14 +13,17 @@ import (
 	model "github.com/learn-microservice-with-go/user_microservice/internal/model"
 	"github.com/learn-microservice-with-go/user_microservice/internal/utils"
 	"github.com/redis/go-redis/v9"
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo"
 	"gorm.io/gorm"
 
 	"google.golang.org/protobuf/types/known/emptypb"
 )
 
 type Server struct {
-	Db  *gorm.DB
-	Rds *redis.Client
+	Db    *gorm.DB
+	Mongo *mongo.Client
+	Rds   *redis.Client
 	proto.UnimplementedUserServiceServer
 }
 
@@ -73,11 +76,29 @@ func (s *Server) GetUser(ctx context.Context, in *proto.GetUserRequest) (*proto.
 	if err := s.Db.Raw("SELECT * FROM offices").Scan(&offices).Error; err != nil {
 		log.Fatalf("Failed to query database: %v", err)
 	}
-	data, err := json.Marshal(offices)
+	mysqlData, err := json.Marshal(offices)
 	if err != nil {
 		log.Fatalf("Failed to marshal JSON: %v", err)
 	}
-	fmt.Println(string(data))
+	fmt.Println(string(mysqlData))
+
+	// Mongo
+	collection := s.Mongo.Database("blog").Collection("announcement")
+	cursor, err := collection.Find(context.Background(), bson.M{})
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+
+	var results []bson.M
+	if err := cursor.All(context.Background(), &results); err != nil {
+		return nil, err
+	}
+	mongoData, err := json.Marshal(results)
+	if err != nil {
+		return nil, err
+	}
+	fmt.Println(string(mongoData))
 
 	return &proto.GetUserReply{
 		User: &proto.User{

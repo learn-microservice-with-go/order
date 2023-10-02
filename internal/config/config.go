@@ -14,6 +14,8 @@ type Config struct {
 	MySQLUser     string `mapstructure:"MYSQL_USER"`
 	MySQLPassword string `mapstructure:"MYSQL_PASSWORD"`
 	MySQLDbName   string `mapstructure:"MYSQL_DB_NAME"`
+	MongoHost     string `mapstructure:"MONGO_HOST"`
+	MongoPort     string `mapstructure:"MONGO_PORT"`
 }
 
 var Provider = wire.NewSet(NewConfig)

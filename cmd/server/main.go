@@ -5,6 +5,7 @@ import (
 
 	config "github.com/learn-microservice-with-go/user_microservice/internal/config"
 	"github.com/redis/go-redis/v9"
+	"go.mongodb.org/mongo-driver/mongo"
 	"google.golang.org/grpc"
 	"gorm.io/gorm"
 )
@@ -12,12 +13,13 @@ import (
 type App struct {
 	config      *config.Config
 	mysqlClient *gorm.DB
+	mongoClint  *mongo.Client
 	redisClient *redis.Client
 	grpcServer  *grpc.Server
 }
 
-func NewApp(config *config.Config, mysqlClient *gorm.DB, redisClient *redis.Client, grpcServer *grpc.Server) *App {
-	return &App{config: config, mysqlClient: mysqlClient, redisClient: redisClient, grpcServer: grpcServer}
+func NewApp(config *config.Config, mysqlClient *gorm.DB, mongoClint *mongo.Client, redisClient *redis.Client, grpcServer *grpc.Server) *App {
+	return &App{config: config, mysqlClient: mysqlClient, mongoClint: mongoClint, redisClient: redisClient, grpcServer: grpcServer}
 }
 
 func main() {

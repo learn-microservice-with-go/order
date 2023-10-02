@@ -9,6 +9,7 @@ package main
 import (
 	"github.com/learn-microservice-with-go/user_microservice/internal/config"
 	"github.com/learn-microservice-with-go/user_microservice/internal/grpc"
+	"github.com/learn-microservice-with-go/user_microservice/internal/mongo"
 	"github.com/learn-microservice-with-go/user_microservice/internal/mysql"
 	"github.com/learn-microservice-with-go/user_microservice/internal/redis"
 )
@@ -24,14 +25,18 @@ func InitializeApp() (*App, error) {
 	if err != nil {
 		return nil, err
 	}
-	client, err := redis.NewRedis(configConfig)
+	client, err := mongo.NewMongo(configConfig)
 	if err != nil {
 		return nil, err
 	}
-	server, err := grpc.NewGrpc(db, client)
+	redisClient, err := redis.NewRedis(configConfig)
 	if err != nil {
 		return nil, err
 	}
-	app := NewApp(configConfig, db, client, server)
+	server, err := grpc.NewGrpc(db, client, redisClient)
+	if err != nil {
+		return nil, err
+	}
+	app := NewApp(configConfig, db, client, redisClient, server)
 	return app, nil
 }

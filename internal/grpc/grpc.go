@@ -6,6 +6,7 @@ import (
 
 	proto "github.com/learn-microservice-with-go/user_microservice/api/service"
 	service "github.com/learn-microservice-with-go/user_microservice/internal/service"
+	"go.mongodb.org/mongo-driver/mongo"
 
 	"github.com/google/wire"
 	"github.com/redis/go-redis/v9"
@@ -15,7 +16,7 @@ import (
 
 var Provider = wire.NewSet(NewGrpc)
 
-func NewGrpc(mysqlClient *gorm.DB, redisClient *redis.Client) (*grpc.Server, error) {
+func NewGrpc(mysqlClient *gorm.DB, mongoClient *mongo.Client, redisClient *redis.Client) (*grpc.Server, error) {
 	lis, err := net.Listen("tcp", ":12345")
 	if err != nil {
 		log.Fatalf("Fail to listen: %v", err)
@@ -23,8 +24,9 @@ func NewGrpc(mysqlClient *gorm.DB, redisClient *redis.Client) (*grpc.Server, err
 
 	grpcServer := grpc.NewServer()
 	s := service.Server{
-		Db:  mysqlClient,
-		Rds: redisClient,
+		Db:    mysqlClient,
+		Mongo: mongoClient,
+		Rds:   redisClient,
 	}
 
 	proto.RegisterUserServiceServer(grpcServer, &s)
