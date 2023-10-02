@@ -1,18 +1,25 @@
 package redis
 
 import (
-	"context"
+	"fmt"
 
-	"github.com/learn-frame/learn-micro-service/internal/env"
+	config "github.com/learn-microservice-with-go/user_microservice/internal/config"
+
+	"github.com/google/wire"
 	"github.com/redis/go-redis/v9"
 )
 
-var REDIS_PASSWORD = env.GetEnv("REDIS_PASSWORD")
+var Provider = wire.NewSet(NewRedis)
 
-var rdb = redis.NewClient(&redis.Options{
-	Addr:     "localhost:6379",
-	Password: REDIS_PASSWORD,
-	DB:       0,
-})
+func NewRedis(config *config.Config) (*redis.Client, error) {
+	redisAddr := fmt.Sprintf("%s:%s", config.RedisHost, config.RedisPort)
+	redisPasswd := config.RedisPassword
 
-var ctx = context.Background()
+	client := redis.NewClient(&redis.Options{
+		Addr:     redisAddr,
+		Password: redisPasswd,
+		DB:       0,
+	})
+
+	return client, nil
+}

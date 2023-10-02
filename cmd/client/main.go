@@ -4,7 +4,8 @@ import (
 	"context"
 	"log"
 
-	proto "github.com/learn-frame/learn-micro-service/api/service"
+	proto "github.com/learn-microservice-with-go/user_microservice/api/service"
+
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )
